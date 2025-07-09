@@ -5,7 +5,7 @@ export const blogs = pgTable('blogs', {
     author: varchar({length: 255}).notNull(),
     title: varchar({length: 255}).notNull(),
     description: varchar({length: 255}).notNull(),
-    contet: varchar().notNull(),
+    content: varchar().notNull(),
     category: varchar({length: 255}).notNull(),
     img_link: varchar().notNull(),
     created_at: timestamp().notNull().defaultNow(),

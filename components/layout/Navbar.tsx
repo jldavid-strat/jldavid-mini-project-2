@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 export default function Navbar(){
     return (
@@ -7,9 +8,13 @@ export default function Navbar(){
                 <div className='flex justify-between items-center'>
                     <h1>thinkthread</h1>
                     <div className='flex gap-6 items-center'>
-                        <div className='bg-white rounded-2xl text-black text-xs p-2'>
-                            <p>Add Blog</p>
-                        </div>
+                        <Link
+                            href={'/blog/add-blog'}
+                        >
+                            <div className='bg-white rounded-2xl text-black text-xs p-2'>
+                                <p>Add Blog</p>
+                            </div>
+                        </Link>
                         <p>Home</p>
                         <p>Blogs</p>
                     </div>

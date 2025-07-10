@@ -17,11 +17,20 @@ const mkdStr = `
 export default function MarkdownEditor(){
  const [value, setValue] = useState(mkdStr);
   return (
-    <div className="w-200">
+    <div data-color-mode="light" className="w-70 overflow-hidden bg-red-400">
       <MDEditor 
         height={200} 
-        value={value} 
-         onChange={(value) => setValue(value ?? '')}
+        value={value}
+        preview={'edit'}
+        onChange={(value) => setValue(value ?? '')}
+        previewOptions={{
+          rehypePlugins: [[rehypeSanitize]],
+        }}
+        />
+      <MDEditor 
+        height={200} 
+        value={value}
+        preview={'preview'}
         previewOptions={{
           rehypePlugins: [[rehypeSanitize]],
         }}

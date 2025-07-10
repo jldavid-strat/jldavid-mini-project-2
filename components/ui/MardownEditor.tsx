@@ -9,7 +9,7 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 
 
-const mkdStr = `
+export const mkdStr = `
 # Write your piece
 `;
 
@@ -17,9 +17,9 @@ const mkdStr = `
 export default function MarkdownEditor(){
  const [value, setValue] = useState(mkdStr);
   return (
-    <div data-color-mode="light" className="w-70 overflow-hidden bg-red-400">
+    <div data-color-mode="light" className="min-w-70 overflow-hidden bg-slate-400 grid grid-cols-1 md:grid-cols-2">
       <MDEditor 
-        height={200} 
+        height={300} 
         value={value}
         preview={'edit'}
         onChange={(value) => setValue(value ?? '')}
@@ -28,7 +28,7 @@ export default function MarkdownEditor(){
         }}
         />
       <MDEditor 
-        height={200} 
+        height={300} 
         value={value}
         preview={'preview'}
         previewOptions={{

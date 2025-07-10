@@ -1,4 +1,3 @@
-import Navbar from "@/components/layout/Navbar";
 import BlogCard from "@/components/ui/BlogCard";
 import { Fragment } from "react";
 import { db } from "@/db/db";
@@ -9,12 +8,11 @@ export default async function Home() {
   console.log(blogList)
   return (
     <Fragment>
-      <Navbar/>
-      <div className="mx-4 flex flex-col">
-        <h2 className="text-black font-bold text-lg">Latest Blogs</h2>
-        <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, esse numquam. Deserunt quasi velit amet sint quidem ullam nisi magni</p>
+      <div className="flex flex-col mt-4">
+        <h2 className="text-black font-bold text-xl">Latest Blogs</h2>
+        <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, saepe. Sapiente sed reiciendis saepe doloribus modi voluptatibus sunt numquam nobis dolorum. At corrupti veniam quam vel sequi! Fugit impedit recusandae iusto, ab velit illo tempore corporis voluptate ullam delectus exercitationem non minima consequuntur tenetur mollitia eaque eligendi debitis ea magnam beatae nihil praesentium molestiae. Officiis, rem praesentium. Cumque aut modi, ea voluptates sunt nisi architecto. Doloribus rerum tempore dolor voluptas!</p>
       </div>
-      <div className="flex flex-col md:flex-row justify-center items-center gap-4 mt-4"> 
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "> 
         {
           blogList.map((blog) => (
             <BlogCard 

@@ -1,11 +1,10 @@
 "use client"
 
-import React  from 'react'
+import React, {useState}  from 'react'
 import { Label } from '@/components/ui/Label'
 import { Input } from '@/components/ui/Input'
 import ImagePreviewInput from '@/components/ui/ImagePreviewInput'
 import MarkdownEditor from '@/components/ui/MardownEditor'
-import { mkdStr } from '@/components/ui/MardownEditor'
 import createBlog from '@/db/actions/blogActions'
 
 // interface BlogForm {
@@ -19,7 +18,9 @@ import createBlog from '@/db/actions/blogActions'
 // }
 
 
-export default function Page(){
+export default function AddBlogPage(){
+
+  const [markdownContent, setMarkdownContent] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,9 +33,10 @@ export default function Page(){
       category: formData.get("category") as string,
       // tags: formData.get("tags") as string,
       image_link: '/assets/images/blog_image_example.jpg' as string,
-      content: mkdStr as string,
+      content: markdownContent as string,
       created_at: new Date(),
     };
+    console.log(data.content)
 
     console.log("Submitted:", data);
     await createBlog(data);
@@ -104,7 +106,7 @@ export default function Page(){
                 <Label htmlFor='content'>Content (Formatted as Markdown)</Label>
                 <span className='text-red-700'>*</span>
               </div>
-              <MarkdownEditor/>
+              <MarkdownEditor value={markdownContent} onChange={setMarkdownContent}/>
             </div>
             <div className='flex flex-row-reverse gap-2'>
               <button type="submit" className='border border-black w-fit p-2 rounded-2xl font-bold'>Create Blog</button>

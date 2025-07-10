@@ -1,7 +1,7 @@
 import BlogCard from "@/components/ui/BlogCard";
-import { Fragment } from "react";
 import { db } from "@/db/db";
 import {blogs} from '@/db/schema'
+import { Fragment } from "react";
 
 export default async function Home() {
   const blogList = await db.select().from(blogs).orderBy(blogs.created_at);

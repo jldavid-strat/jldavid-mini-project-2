@@ -5,10 +5,10 @@ import rehypeSanitize from 'rehype-sanitize';
 
 type MardownEditorProps = {
   value: string;
-  onChange: (value:string) => void;
+  onValueChange: (value:string) => void;
 }
 
-export default function MarkdownEditor({ value, onChange }: MardownEditorProps){
+export default function MarkdownEditor({ value, onValueChange }: MardownEditorProps){
 
   return (
     <div data-color-mode="light" className="min-w-70 overflow-hidden bg-slate-400 grid grid-cols-1 md:grid-cols-2">
@@ -16,7 +16,7 @@ export default function MarkdownEditor({ value, onChange }: MardownEditorProps){
         height={300} 
         value={value}
         preview={'edit'}
-        onChange={(val) => onChange(val ?? "")}
+        onChange={(val) => onValueChange(val ?? "")}
         previewOptions={{
           rehypePlugins: [[rehypeSanitize]],
         }}

@@ -4,6 +4,8 @@ import { blogs } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import MarkdownContent from '@/components/ui/MardownContent';
 // import Image from 'next/image';
+import CommentForm from '@/components/layout/CommentForm';
+import Comment from '@/components/ui/Comment';
 
 type BlogDetailPageProps = {
     params: {
@@ -47,7 +49,18 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
             <div className='w-full border mb-4'></div>
             {/* render content ast markdown */}
             <MarkdownContent source={blog.content} colorMode='light'/>
-            <h3>Commentss</h3>
+            <div className='mt-8 w-full border mb-4'></div>
+            <h3 className='mb-4 text-2xl font-bold'>Leave a Comment</h3>
+            <CommentForm/>
+            <div className='mt-8 w-full border mb-4'></div>
+            <h3 className='mb-4 text-2xl font-bold'>Comments</h3>
+            <section className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                <Comment/>
+                <Comment/>
+                <Comment/>
+                <Comment/>
+                <Comment/>
+            </section>
             <h3>Related Blogs</h3>
         </div>
     )

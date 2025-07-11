@@ -35,8 +35,8 @@ function CustomLabel({
   className,
 }: CustomLabelProps){
   return(
-    <div className='inline-flex gap-1'>
-      <Label className={className} htmlFor={htmlFor}>{label}</Label>
+    <div className={`inline-flex gap-1 ${className ?? ""}`}>
+      <Label htmlFor={htmlFor}>{label}</Label>
       { required ? 
         <span className='text-red-700'>*</span>
         : ""

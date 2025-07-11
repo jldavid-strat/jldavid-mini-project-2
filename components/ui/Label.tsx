@@ -21,4 +21,28 @@ function Label({
   )
 }
 
-export { Label }
+interface CustomLabelProps{
+  label: string;
+  htmlFor: string;
+  required: boolean;
+  className?:string;
+}
+
+function CustomLabel({
+  label,
+  htmlFor,
+  required,
+  className,
+}: CustomLabelProps){
+  return(
+    <div className='inline-flex gap-1'>
+      <Label className={className} htmlFor={htmlFor}>{label}</Label>
+      { required ? 
+        <span className='text-red-700'>*</span>
+        : ""
+      }
+    </div>
+  )
+}
+
+export { Label, CustomLabel }

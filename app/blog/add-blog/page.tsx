@@ -1,8 +1,8 @@
 "use client"
 
 import React, {useState}  from 'react'
-import { Label } from '@/components/ui/Label'
 import { Input } from '@/components/ui/Input'
+import { CustomLabel } from '@/components/ui/Label'
 import ImagePreviewInput from '@/components/ui/ImagePreviewInput'
 import MarkdownEditor from '@/components/ui/MardownEditor'
 import createBlog from '@/db/actions/blogActions'
@@ -53,59 +53,65 @@ export default function AddBlogPage(){
           <form onSubmit={handleSubmit} className='flex flex-col gap-y-3'>
             {/* title */}
             <div>
-              <div className='inline-flex gap-1'>
-                <Label htmlFor='title'>Title</Label>
-                <span className='text-red-700'>*</span>
-              </div>
+              <CustomLabel
+                htmlFor='title'
+                label='Title'
+                required={true}
+              />
               <Input name='title' type='text' placeholder='Title'></Input>
             </div>
             {/* author */}
             <div>
-              <div className='inline-flex gap-1'>
-                <Label htmlFor='author'>Author</Label>
-                <span className='text-red-700'>*</span>
-              </div>
+              <CustomLabel
+                htmlFor='author'
+                label='Author'
+                required={true}
+              />
               <Input name='author' type='text' placeholder='Author'></Input>
             </div>
             <div>
-              <div className='inline-flex gap-1'>
-                <Label htmlFor='description'>Description</Label>
-                <span className='text-red-700'>*</span>
-              </div>
+              <CustomLabel
+                htmlFor='description'
+                label='Description'
+                required={true}
+              />
               <Input name='description' type='text' placeholder='Write a brief description...'></Input>
             </div>
             {/* category */}
             <div>
-              <div className='inline-flex gap-1'>
-                <Label htmlFor='category'>Category</Label>
-                <span className='text-red-700'>*</span>
-              </div>
+              <CustomLabel
+                htmlFor='category'
+                label='Category'
+                required={true}
+              />
               <Input name='category' type='text' placeholder='software etc.'></Input>
             </div>
             {/* tags */}
             <div>
-              <div className='inline-flex gap-1'>
-                <Label htmlFor='tags'>Tags</Label>
-                <span className='text-red-700'>*</span>
-              </div>
+              <CustomLabel
+                htmlFor='tags'
+                label='Tags'
+                required={false}
+              />
               <Input name='tags' type='text' placeholder='programming, ui/ux, etc.'></Input>
             </div>
             {/* cover_image */}
             <div>
-              <div className='inline-flex gap-1'>
-                <Label htmlFor='cover-image'>Cover Image</Label>
-                <span className='text-red-700'>*</span>
-              </div>
+              <CustomLabel
+                htmlFor='cover-image'
+                label='Cover Image (JPEG, JPG, PNG)'
+                required={true}
+              />
               <ImagePreviewInput/>
-
             </div>
 
-            {/* content */}
+            {/* markdown content */}
             <div>
-              <div className='inline-flex gap-1'>
-                <Label htmlFor='content'>Content (Formatted as Markdown)</Label>
-                <span className='text-red-700'>*</span>
-              </div>
+              <CustomLabel
+                htmlFor='content'
+                label='Content (written in Markdown)'
+                required={true}
+              />
               <MarkdownEditor value={markdownContent} onChange={setMarkdownContent}/>
             </div>
             <div className='flex flex-row-reverse gap-2'>

@@ -2,16 +2,6 @@
 import React from 'react'
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from 'rehype-sanitize';
-// No import is required in the WebPack.
-import "@uiw/react-md-editor/markdown-editor.css";
-// No import is required in the WebPack.
-import "@uiw/react-markdown-preview/markdown.css";
-
-
-export const mkdStr = `
-# Write your piece
-`;
-
 
 type MardownEditorProps = {
   value: string;

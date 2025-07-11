@@ -32,22 +32,22 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
     );
     
     return (
-        <div className='mx-auto mt-2 max-w-[980px]'>
-            <header className='flex flex-row justify-between'>
+        <div className='mx-2 lg:mx-auto mt-2 max-w-[980px]'>
+            <header className='flex flex-row justify-between items-center'>
                 <h2 className='text-3xl font-bold'>{blog.title}</h2>
-                <p>{blog.category}</p>
+                <p className='p-4'>{blog.category}</p>
             </header>
             <div className='h-40 min-w-[300px] bg-slate-500 rounded-sm'>
             </div>
             <section className='flex flex-row gap-1'>
                 <p>{blog.author}</p>
-                <p>{blog.created_at.toLocaleDateString()}</p>
+                <p>{blog.created_at.toString()}</p>
             </section>
             <p>tags</p>
             <div className='w-full border mb-4'></div>
             {/* render content ast markdown */}
             <MarkdownContent source={blog.content} colorMode='light'/>
-            <h3>Comment</h3>
+            <h3>Commentss</h3>
             <h3>Related Blogs</h3>
         </div>
     )

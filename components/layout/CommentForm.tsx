@@ -5,16 +5,32 @@ import { Label, CustomLabel } from '../ui/Label'
 import { Input } from '@/components/ui/Input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/RadioGroup'
 import { Textarea } from '../ui/TextArea'
+import { addComment } from '@/db/actions/commentActions'
+// import { db } from '@/db/db'
+// import { comments } from '@/db/schema'
 
-export default function CommentForm (){
-    const [isAnonymous, setIsAnonymous] = useState("")
+
+
+
+export default function CommentForm ({blogId} : {blogId: number}){
+    const [isAnonymous, setIsAnonymous] = useState("yes")
 
     const handledSelectRadioButton = (value: string) => {
         setIsAnonymous(value)
     }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        formData.append("blogId", blogId.toString());
+
+        await addComment(formData);
+    }
+
     return (
         <section>
-            <form action="" className="flex flex-col gap-3">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                 <div className='flex flex-row'>
                     <CustomLabel
                         htmlFor='set-anononymity'
@@ -57,10 +73,13 @@ export default function CommentForm (){
                         label='Message'
                         required={true}
                     />
-                    <Textarea>
+                    <Textarea
+                        name='message'
+                        placeholder='Share your thoughts about the blog'                    
+                    >
                     </Textarea>
                 </div>
-              <div><button type="submit" className='border border-black w-fit p-1 rounded-2xl font-bold'>Comment</button></div>
+              <div><button type="submit" className='border border-black w-fit p-2 rounded-2xl font-bold'>Comment</button></div>
             </form>
         </section>
     )

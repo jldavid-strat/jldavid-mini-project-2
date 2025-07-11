@@ -17,7 +17,6 @@ import createBlog from '@/db/actions/blogActions'
 //   content: string;
 // }
 
-
 export default function AddBlogPage(){
 
   const [markdownContent, setMarkdownContent] = useState("");
@@ -36,7 +35,6 @@ export default function AddBlogPage(){
       content: markdownContent as string,
       created_at: new Date(),
     };
-    console.log(data.content)
 
     console.log("Submitted:", data);
     await createBlog(data);

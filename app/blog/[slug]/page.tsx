@@ -6,6 +6,7 @@ import MarkdownContent from '@/components/ui/MardownContent';
 // import Image from 'next/image';
 import CommentForm from '@/components/layout/CommentForm';
 import Comment from '@/components/ui/Comment';
+import { getCommentsByBlogId } from '@/db/actions/commentActions';
 
 type BlogDetailPageProps = {
     params: {
@@ -16,6 +17,7 @@ type BlogDetailPageProps = {
 export default async function BlockDetailPage({params} : BlogDetailPageProps){
     const slug = await params
     const blogId = parseInt(slug.slug)
+    const commentList = await getCommentsByBlogId(blogId)
 
     if (isNaN(blogId)) return (
         <div className='text-xl bg-slate-400 text-red w-100 h-100 justify-center items-center'>
@@ -51,15 +53,29 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
             <MarkdownContent source={blog.content} colorMode='light'/>
             <div className='mt-8 w-full border mb-4'></div>
             <h3 className='mb-4 text-2xl font-bold'>Leave a Comment</h3>
-            <CommentForm/>
+            <CommentForm
+                blogId={blog.id}
+            />
             <div className='mt-8 w-full border mb-4'></div>
             <h3 className='mb-4 text-2xl font-bold'>Comments</h3>
             <section className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                <Comment/>
-                <Comment/>
-                <Comment/>
-                <Comment/>
-                <Comment/>
+                {
+                    commentList 
+                        ? Object.values(commentList).map(
+                            (comment, index) => 
+                            (       
+                            <Comment
+                                key={index}
+                                name={comment.written_by}
+                                message={comment.detail}
+                                created_at={comment.created_at}
+                            />
+                        ) 
+                    ):
+                    (
+                        <div>No Comments</div>
+                    )
+                }
             </section>
             <h3>Related Blogs</h3>
         </div>

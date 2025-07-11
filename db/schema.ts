@@ -1,4 +1,4 @@
-import { pgTable, integer, varchar, timestamp, primaryKey } from "drizzle-orm/pg-core";
+import { pgTable, integer, serial, varchar, timestamp, primaryKey } from "drizzle-orm/pg-core";
 
 export const blogs = pgTable('blogs', {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -12,15 +12,15 @@ export const blogs = pgTable('blogs', {
 })
 
 export const comments = pgTable('comments', {
-    id: integer().primaryKey(),
+    id: serial("id").primaryKey(),
     written_by: varchar({length:255}).notNull(),
     detail: varchar().notNull(),
     created_at: timestamp().notNull().defaultNow(),
 })
 
 export const comments_to_blogs = pgTable('comments_to_blogs',{
-    blog_id: integer('blog_id'),
-    comment_id: integer('comment_id'),
+    blog_id: integer('blog_id').notNull(),
+    comment_id: integer('comment_id').notNull(),
     },
     (table) => [
         primaryKey({ columns: [table.blog_id, table.comment_id] }),

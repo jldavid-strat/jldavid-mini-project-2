@@ -63,7 +63,7 @@ export default function ImagePreviewInput(
         />
             {
                 imagePreview ? 
-                <div className='mt-2 bg-slate-200 w-full lg:w-[1165px] h-[600px] aspect-16/9 rounded-sm grow-0 relative overflow-hidden'>
+                <div className='mt-2 bg-slate-200 w-full lg:w-[1165px] h-30 md:h-70 lg:h-[600px] aspect-16/9 rounded-sm grow-0 relative overflow-hidden'>
                     <Image
                         src={imagePreview}
                         alt='uploaded cover image preview'

@@ -9,6 +9,7 @@ import Comment from '@/components/ui/Comment';
 import { getCommentsByBlogId } from '@/db/actions/commentActions';
 import {formatDate} from '@/helpers/helper';
 import { Badge } from '@/components/ui/Badge';
+import Image from 'next/image';
 
 type BlogDetailPageProps = {
     params: {
@@ -41,16 +42,19 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
     return (
         <div className='mx-2 lg:mx-auto mt-6 max-w-[980px]'>
             <h2 className='text-3xl font-bold text-center mb-2'>{blog.title}</h2>
-            <div className='h-40 min-w-[300px] bg-slate-500 rounded-sm'>
+            <div className='mt-2 bg-slate-200 w-full lg:w-[980x] h-30 md:h-70 lg:h-[600px] aspect-16/9 rounded-sm grow-0 relative overflow-hidden'>
+                <Image
+                    src={`/assets/images/${blog.img_link}`}
+                    alt='uploaded cover image preview'
+                    fill
+                    className='object-cover'
+                />
             </div>
             <section className='mt-2 mb-2 flex flex-col md:flex-row md:justify-between gap-1'>
                 <div className='flex flex-col gap-1'>
                     <p>Published by <span className='font-bold'>{blog.author}</span></p>
                     <Badge>
                         <p>{blog.category}</p>
-                    </Badge>
-                    <Badge variant={'outline'}>
-                        <p>tags</p>
                     </Badge>
                 </div>
                 <div className='flex flex-col md:text-right'>

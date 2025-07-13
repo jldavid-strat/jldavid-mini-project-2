@@ -12,7 +12,7 @@ async function createBlog (blogFormData: {
     content: string;
     created_at: Date;
 }){
-    await db.insert(blogs).values({
+   const [insertedBlog] =  await db.insert(blogs).values({
         title: blogFormData.title,
         author: blogFormData.author,
         description: blogFormData.description,
@@ -20,8 +20,9 @@ async function createBlog (blogFormData: {
         img_link: blogFormData.image_link,
         content: blogFormData.content,
         created_at: blogFormData.created_at,
-    })
-    
+    }).returning({id : blogs.id})
+   
+    return insertedBlog.id
 }
 
 export default createBlog

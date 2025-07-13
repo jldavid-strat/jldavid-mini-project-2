@@ -1,12 +1,13 @@
 "use client"
 
-import React, {useState}  from 'react'
+import React, {useRef, useState}  from 'react'
 import { Input } from '@/components/ui/Input'
 import { CustomLabel } from '@/components/ui/Label'
 import ImagePreviewInput from '@/components/ui/ImagePreviewInput'
 import MarkdownEditor from '@/components/ui/MardownEditor'
 import createBlog from '@/db/actions/blogActions'
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 // interface BlogForm {
 //   title: string;
@@ -28,6 +29,8 @@ export default function AddBlogPage(){
 
   const [markdownContent, setMarkdownContent] = useState("") 
   const [selectedImage, setSelectedImage] = useState<Option | null>(null)
+  const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter()
 
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,17 +49,18 @@ export default function AddBlogPage(){
       }
 
       console.log("Submitted:", data);
-      // await createBlog(data);
-      
-      // Clear the form
-      e.currentTarget.reset();
+      const newBlogId = await createBlog(data);
+    
+      // reset the form
+      formRef.current?.reset();
       setSelectedImage(null);
       setMarkdownContent('');
       
-      // Show success toast
       toast.success('Blog post created successfully!');
-      
       console.log("successfully submitted data");
+
+      router.push(`/blog/${newBlogId}`)
+      
     } 
     catch (error) {
       console.error('Error submitting form:', error);
@@ -71,7 +75,7 @@ export default function AddBlogPage(){
         <div className='mt-4 border rounded-sm p-4'>
           <h2 className='text-2xl font-bold mb-2'>Create New Blog</h2>
           
-          <form onSubmit={handleSubmit} className='flex flex-col gap-y-3'>
+          <form ref= {formRef} onSubmit={handleSubmit} className='flex flex-col gap-y-3'>
             {/* title */}
             <div className='grid grid-cols-1 md:grid-cols-2 md:gap-8 gap-y-3'>
               <div>

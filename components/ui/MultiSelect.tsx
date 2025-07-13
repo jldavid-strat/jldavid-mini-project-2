@@ -12,7 +12,8 @@ interface SelectProps {
   options: Option[];
   isMulti?: boolean;
   placeholder?: string;
-  value?: MultiValue<Option> | SingleValue<Option>; // Add this line
+  value?: MultiValue<Option> | SingleValue<Option>; 
+  defaultValue?: MultiValue<Option> | SingleValue<Option>; 
   onChange?: (value: MultiValue<Option> | SingleValue<Option>) => void;
 }
 
@@ -20,7 +21,8 @@ export default function CustomSelect({
   options, 
   isMulti = false, 
   placeholder = "Select...",
-  value, // Add this parameter
+  value,
+  defaultValue,
   onChange 
 }: SelectProps) {
   const [isMounted, setIsMounted] = useState(false);
@@ -43,8 +45,9 @@ export default function CustomSelect({
       options={options}
       isMulti={isMulti}
       placeholder={placeholder}
-      value={value} // Add this line
+      value={value} 
       onChange={onChange}
+      defaultValue={defaultValue}
       className="react-select-container"
       classNamePrefix="react-select"
     />

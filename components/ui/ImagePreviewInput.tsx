@@ -18,8 +18,8 @@ interface ImagePreviewInputProps {
 export default function ImagePreviewInput(
     { selectedImage, setSelectedImage }: ImagePreviewInputProps
 ){
-    const [imagePreview, setImagePreview] = useState("")
-    const [imageOptions, setImageOptions] = useState<Option[]>([])
+    const [imagePreview, setImagePreview] = useState("/assets/images/bg-1.jpg")
+    const [imageOptions, setImageOptions] = useState<Option[]>([{value: 'bg-1.jpg', label:'bg-1.jpg'}])
 
     // Fetch images
     useEffect(() => {
@@ -58,6 +58,7 @@ export default function ImagePreviewInput(
             isMulti={false}
             onChange={handleImageSelect}
             value={selectedImage}
+            defaultValue={selectedImage}
             placeholder="Select an image..."
         />
             {

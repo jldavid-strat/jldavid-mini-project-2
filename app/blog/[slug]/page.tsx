@@ -10,6 +10,13 @@ import { getCommentsByBlogId } from '@/db/actions/commentActions';
 import {formatDate} from '@/helpers/helper';
 import { Badge } from '@/components/ui/Badge';
 import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartOutline } from '@fortawesome/free-regular-svg-icons';
+import { faComment as faCommentOutline} from '@fortawesome/free-regular-svg-icons';
+import { faPenToSquare as faPenToSquareOutline} from '@fortawesome/free-regular-svg-icons';
+import { faEdit as faEditOutline} from '@fortawesome/free-regular-svg-icons';
+import { faTrashCan as faTrashCanOutline} from '@fortawesome/free-regular-svg-icons';
 
 type BlogDetailPageProps = {
     params: {
@@ -21,6 +28,7 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
     const slug = await params
     const blogId = parseInt(slug.slug)
     const commentList = await getCommentsByBlogId(blogId)
+    const iconSize = 20
     
     if (isNaN(blogId)) return (
         <div className='text-xl bg-slate-400 text-red w-100 h-100 justify-center items-center'>
@@ -40,8 +48,17 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
     );
     
     return (
-        <div className='mx-2 lg:mx-auto mt-6 max-w-[980px]'>
-            <h2 className='text-3xl font-bold text-center mb-2'>{blog.title}</h2>
+        <div className='mx-2 lg:mx-auto mt-6 max-w-[980px] border relative'>
+            <div className='mb-2 group flex flex-col md:relative md:flex-row-reverse justify-between'>
+                <div className='w-full'>
+                    <h2 className='text-3xl font-bold text-center'>{blog.title}</h2>
+                </div>
+                <div className='flex flex-row gap-3 justify-center md:absolute md:mt-3 z-10'>
+                    <div className='opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer no-underline hover:underline hover:underline-offset-4 text-black font-bold'>Edit</div>
+                    <div className='opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer hover:underline
+                    hover:underline-offset-4 text-black font-bold'>Delete</div>
+                </div>
+            </div>
             <div className='mt-2 bg-slate-200 w-full lg:w-[980x] h-30 md:h-70 lg:h-[600px] aspect-16/9 rounded-sm grow-0 relative overflow-hidden'>
                 <Image
                     src={`/assets/images/${blog.img_link}`}
@@ -50,6 +67,7 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
                     className='object-cover'
                 />
             </div>
+
             <section className='mt-2 mb-2 flex flex-col md:flex-row md:justify-between gap-1'>
                 <div className='flex flex-col gap-1'>
                     <p>Published by <span className='font-bold'>{blog.author}</span></p>
@@ -74,7 +92,7 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
             <h3 className='mb-4 text-2xl font-bold'>Comments</h3>
             <section className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                 {
-                    commentList 
+                    commentList.length > 0 
                         ? Object.values(commentList).map(
                             (comment, index) => 
                             (       
@@ -91,6 +109,28 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
                     )
                 }
             </section>
+            <div className='absolute bottom-[-50] border w-full'>
+                <div className='rounded-full bg-black text-slate-50 h-12 w-68 mx-auto border border-red-400'>
+                    <div className='flex flex-row justify-center items-center w-full gap-4 border border-red-400 h-full'>
+                        <div className='flex flex-row justify-center items-center gap-2'>
+                            <FontAwesomeIcon icon={faHeartOutline} fontSize={iconSize}/>
+                            <div className='text-lg'>1</div>
+                        </div>
+                        <div className='w-0.5 h-7 bg-white'></div>
+                        <div>
+                            <FontAwesomeIcon icon={faCommentOutline} fontSize={iconSize}/>
+                        </div>
+                        <div className='w-0.5 h-7 bg-white'></div>
+                        <div>
+                            <FontAwesomeIcon icon={faPenToSquareOutline} fontSize={iconSize}/>
+                        </div>
+                        <div className='w-0.5 h-7 bg-white'></div>
+                        <div>
+                            <FontAwesomeIcon icon={faTrashCanOutline} fontSize={iconSize}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {/* <h3>Related Blogs</h3> */}
         </div>
     )

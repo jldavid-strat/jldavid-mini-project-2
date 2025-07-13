@@ -1,3 +1,4 @@
+import {formatDate} from '@/helpers/helper';
 import React from 'react'
 
 
@@ -12,11 +13,14 @@ export default function Comment({
     created_at,
     message,
 }: CommentProps) {
+    
+    const [formattedDate, formattedTime] = formatDate(created_at)
+
     return (
-        <div className='w-full flex flex-col'>
+        <div className='w-full flex flex-col hover:bg-gray-100 hover:rounded-md  hover:p-4 hover:border'>
             <div className='flex flex-col md:flex-row md:justify-between gap-1 md:gap-2 text-sm text-gray-500'>
                 <p>{name}</p>
-                <p className='pr-10'>{created_at.toLocaleString()}</p>
+                <p>Posted on {formattedDate} at {formattedTime}</p>
             </div>
             <p>{message}</p>
 

@@ -1,6 +1,6 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "../db";
 import { comments, comments_to_blogs } from "../schema";
 import { revalidatePath } from "next/cache";
@@ -37,6 +37,7 @@ export async function getCommentsByBlogId(blogId: number){
     .from(comments)
     .leftJoin(comments_to_blogs, eq(comments.id, comments_to_blogs.comment_id))
     .where(eq(comments_to_blogs.blog_id, blogId))
+    .orderBy(desc(comments.created_at))
 
     return resultSet
 }

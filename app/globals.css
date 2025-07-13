@@ -127,3 +127,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+    [class*="hover:"]:not(.no-transition) {
+    @apply transition-all duration-250;
+  }
+}

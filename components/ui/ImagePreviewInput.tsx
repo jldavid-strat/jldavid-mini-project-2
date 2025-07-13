@@ -1,34 +1,68 @@
 "use client"
 
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Image from 'next/image'
-import { Input } from './Input'
+import CustomSelect from './MultiSelect'
+import { SingleValue, MultiValue } from 'react-select';
 
-export default function ImagePreviewInput(){
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface ImagePreviewInputProps {
+  selectedImage: {value: string, label: string} | null;
+  setSelectedImage: (image: {value: string, label: string} | null) => void;
+}
+
+export default function ImagePreviewInput(
+    { selectedImage, setSelectedImage }: ImagePreviewInputProps
+){
     const [imagePreview, setImagePreview] = useState("")
+    const [imageOptions, setImageOptions] = useState<Option[]>([])
 
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0]
-        if (!file) return console.log("No image uploaded")
+    // Fetch images
+    useEffect(() => {
+    fetch('/api/images')
+        .then(res => res.json())
+        .then(images => {
+        const options = images.map((img: string) => ({
+            value: `${img}`,
+            label: img
+        }))
+        setImageOptions(options)
+        })
+    }, [])
 
-        const previewUrl = URL.createObjectURL(file)
-        console.log(previewUrl)
-        setImagePreview(previewUrl)
+    // Fix the onChange handler with proper typing
+
+    const handleImageSelect = (selectedOption: SingleValue<Option> | MultiValue<Option>) => {
+    // Since isMulti={false}, we know it's SingleValue
+        const option = selectedOption as SingleValue<Option>;
+        
+        if (!option) {
+            setImagePreview("")
+            setSelectedImage(null)
+            return
+        }
+
+        setSelectedImage(option)
+        setImagePreview(`/assets/images/${option.value}`)
+        console.log("Selected image:", option.value)
     }
-    
+
     return (
-        <div>
-            <Input 
-                name='cover-image' 
-                type='file' 
-                accept='image'
-                multiple={false}
-                onChange={handleImageUpload}
-            >
-            </Input>
+    <div>
+        <CustomSelect
+            options={imageOptions}
+            isMulti={false}
+            onChange={handleImageSelect}
+            value={selectedImage}
+            placeholder="Select an image..."
+        />
             {
                 imagePreview ? 
-                <div className='mt-2 bg-slate-200 min-w-50 h-50 rounded-sm relative overflow-hidden'>
+                <div className='mt-2 bg-slate-200 w-full lg:w-[1165px] h-[600px] aspect-16/9 rounded-sm grow-0 relative overflow-hidden'>
                     <Image
                         src={imagePreview}
                         alt='uploaded cover image preview'

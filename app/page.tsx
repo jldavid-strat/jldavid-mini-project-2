@@ -22,7 +22,7 @@ export default async function Home() {
               author={blog.author}
               description={blog.description}
               category={blog.category}
-              created_at={blog.created_at.toDateString()}
+              created_at={blog.created_at}
             />
           ))
         }

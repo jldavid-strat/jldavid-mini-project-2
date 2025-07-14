@@ -12,7 +12,8 @@ import { faComment as faCommentOutline} from '@fortawesome/free-regular-svg-icon
 import { faPenToSquare as faPenToSquareOutline} from '@fortawesome/free-regular-svg-icons';
 import { faEdit as faEditOutline} from '@fortawesome/free-regular-svg-icons';
 import { faTrashCan as faTrashCanOutline} from '@fortawesome/free-regular-svg-icons';
-import styles from '@/styles/StickyToolBar.module.css';
+import styles from '@/styles/StickyMenuBar.module.css';
+import Link from 'next/link';
 
 
 interface BlogProps {
@@ -40,28 +41,32 @@ interface ExtendedBlogProps {
 
 
 
-function StickyToolBar(
-    {iconSize}: {iconSize: number}
+function StickyMenuBar(
+    {iconSize, blogId}: {iconSize: number, blogId:number}
 ){
     return(
-        <div className={`sticky bottom-5 w-[980px] border z-50 ${styles.popIn}`}>
-            <div className='rounded-full bg-black text-slate-50 h-12 w-68 mx-auto border border-red-400'>
-                <div className='flex flex-row justify-center items-center w-full gap-4 border border-red-400 h-full'>
+        <div className={`sticky bottom-5 w-[980px] z-50 ${styles.popIn}`}>
+            <div className='rounded-full bg-black text-slate-50 h-12 w-68 mx-auto '>
+                <div className='flex flex-row justify-center items-center w-full gap-4 h-full'>
                     <div className='flex flex-row justify-center items-center gap-2'>
-                        <FontAwesomeIcon icon={faHeartOutline} fontSize={iconSize}/>
+                        <FontAwesomeIcon icon={faHeartOutline} fontSize={iconSize} className='hover:scale-[1.5] cursor-pointer'/>
                         <div className='text-lg'>1</div>
                     </div>
                     <div className='w-0.5 h-7 bg-white'></div>
                     <div>
-                        <FontAwesomeIcon icon={faCommentOutline} fontSize={iconSize}/>
+                        <Link href='#comment-section'>
+                            <FontAwesomeIcon icon={faCommentOutline} fontSize={iconSize} className='hover:scale-[1.5] cursor-pointer'/>
+                        </Link>
                     </div>
                     <div className='w-0.5 h-7 bg-white'></div>
                     <div>
-                        <FontAwesomeIcon icon={faPenToSquareOutline} fontSize={iconSize}/>
+                        <Link href={`blog/${blogId}/edit-blog`}>
+                            <FontAwesomeIcon icon={faPenToSquareOutline} fontSize={iconSize} className='hover:scale-[1.5] cursor-pointer'/>
+                        </Link>
                     </div>
                     <div className='w-0.5 h-7 bg-white'></div>
                     <div>
-                        <FontAwesomeIcon icon={faTrashCanOutline} fontSize={iconSize}/>
+                        <FontAwesomeIcon icon={faTrashCanOutline} fontSize={iconSize} className='hover:scale-[1.5] cursor-pointer'/>
                     </div>
                 </div>
             </div>
@@ -99,7 +104,7 @@ export default function BlogDetailPage ({
 
   
     return (
-        <div className='mx-2 lg:mx-auto mt-6 max-w-[980px] border'>
+        <div className='mx-2 lg:mx-auto mt-6 max-w-[980px]'>
             <div ref={startRef}  className='mb-2 group flex flex-col md:relative md:flex-row-reverse justify-between'>
                 <div className='w-full'>
                     <h2 className='text-3xl font-bold text-center'>{blog.title}</h2>
@@ -143,7 +148,7 @@ export default function BlogDetailPage ({
                 blogId={blog.id}
                 />
             <div className='mt-8 w-full border mb-4'></div>
-            <h3 className='mb-4 text-2xl font-bold'>Comments</h3>
+            <h3 id='comment-section' className='mb-4 text-2xl font-bold'>Comments</h3>
             <section className='grid grid-cols-1 md:grid-cols-2 gap-4 mb-10'>
                 {
                     commentList.length > 0 
@@ -164,7 +169,7 @@ export default function BlogDetailPage ({
                 }
             </section>
             {
-                showToolbar && <StickyToolBar iconSize={iconSize}/>
+                showToolbar && <StickyMenuBar iconSize={iconSize} blogId={blog.id}/>
             }
             <div ref={endRef} className='w-full h-100'>
                     should end here

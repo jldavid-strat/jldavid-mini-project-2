@@ -5,19 +5,9 @@ import { Input } from '@/components/ui/Input'
 import { CustomLabel } from '@/components/ui/Label'
 import ImagePreviewInput from '@/components/ui/ImagePreviewInput'
 import MarkdownEditor from '@/components/ui/MardownEditor'
-import createBlog from '@/db/actions/blogActions'
+import {createBlog} from '@/db/actions/blogActions'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-
-// interface BlogForm {
-//   title: string;
-//   author: string;
-//   category: string;
-//   tags: string;
-//   description: string;
-//   image_link: string;
-//   content: string;
-// 
 
 interface Option {
   value: string;

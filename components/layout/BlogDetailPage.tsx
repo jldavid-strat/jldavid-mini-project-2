@@ -14,6 +14,9 @@ import { faEdit as faEditOutline} from '@fortawesome/free-regular-svg-icons';
 import { faTrashCan as faTrashCanOutline} from '@fortawesome/free-regular-svg-icons';
 import styles from '@/styles/StickyMenuBar.module.css';
 import Link from 'next/link';
+import { deleteBlog } from '@/db/actions/blogActions';
+import { useRouter } from 'next/navigation'
+import toast, { Toaster } from 'react-hot-toast';
 
 
 interface BlogProps {
@@ -44,6 +47,21 @@ interface ExtendedBlogProps {
 function StickyMenuBar(
     {iconSize, blogId}: {iconSize: number, blogId:number}
 ){
+    const router = useRouter()
+    async function handleDelete(){
+        try{
+            await deleteBlog({blogId})
+            console.log('blogid to be deleted',blogId)   
+            
+            toast.success('Blog post successfully deleted!');
+            router.push('/blog')
+        }
+        catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error('Failed to create blog post. Please try again.');
+        }
+
+    }
     return(
         <div className={`sticky bottom-5 w-[980px] z-50 ${styles.popIn}`}>
             <div className='rounded-full bg-black text-slate-50 h-12 w-68 mx-auto '>
@@ -66,7 +84,9 @@ function StickyMenuBar(
                     </div>
                     <div className='w-0.5 h-7 bg-white'></div>
                     <div>
-                        <FontAwesomeIcon icon={faTrashCanOutline} fontSize={iconSize} className='hover:scale-[1.5] cursor-pointer'/>
+                        <button onClick={handleDelete}type='button'>
+                            <FontAwesomeIcon icon={faTrashCanOutline} fontSize={iconSize} className='hover:scale-[1.5] cursor-pointer'/>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -174,9 +194,22 @@ export default function BlogDetailPage ({
             <div ref={endRef} className='w-full h-100'>
                     should end here
             </div>
+            
 
             {/* <h3>Related Blogs</h3> */}
+
+            <Toaster 
+            position="top-center"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+            }}
+         />
         </div>
+        
 
 )
 }

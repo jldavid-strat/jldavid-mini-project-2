@@ -1,5 +1,6 @@
 "use server"
 
+import { eq } from "drizzle-orm";
 import { db } from "../db"
 import { blogs } from "../schema"
 
@@ -25,4 +26,8 @@ async function createBlog (blogFormData: {
     return insertedBlog.id
 }
 
-export default createBlog
+async function deleteBlog({blogId}: {blogId:number}){
+    await db.delete(blogs).where(eq(blogs.id,blogId))
+}
+
+export {createBlog , deleteBlog}

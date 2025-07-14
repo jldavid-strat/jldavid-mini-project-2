@@ -78,7 +78,7 @@ function StickyMenuBar(
                     </div>
                     <div className='w-0.5 h-7 bg-white'></div>
                     <div>
-                        <Link href={`blog/${blogId}/edit-blog`}>
+                        <Link href={`${blogId}/edit-blog`}>
                             <FontAwesomeIcon icon={faPenToSquareOutline} fontSize={iconSize} className='hover:scale-[1.5] cursor-pointer'/>
                         </Link>
                     </div>

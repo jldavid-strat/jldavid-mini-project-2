@@ -26,8 +26,33 @@ async function createBlog (blogFormData: {
     return insertedBlog.id
 }
 
+async function updateBlog (
+    blogIdEdit:number, 
+    blogFormData: {
+        title: string;
+        author: string;
+        category: string;
+        description: string;
+        image_link: string;
+        content: string;
+        created_at: Date;
+    }){
+   await db.update(blogs).set({
+        title: blogFormData.title,
+        author: blogFormData.author,
+        description: blogFormData.description,
+        category: blogFormData.category,
+        img_link: blogFormData.image_link,
+        content: blogFormData.content,
+        created_at: blogFormData.created_at,
+    }).where(eq(blogs.id, blogIdEdit))
+}
+
+
 async function deleteBlog({blogId}: {blogId:number}){
     await db.delete(blogs).where(eq(blogs.id,blogId))
 }
 
-export {createBlog , deleteBlog}
+
+
+export {createBlog , deleteBlog, updateBlog}

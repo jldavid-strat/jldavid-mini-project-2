@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { Badge } from './Badge';
+import {formatDate} from '@/helpers/helper';
 
 interface BlogCardProps {
     id: number;
@@ -8,7 +10,7 @@ interface BlogCardProps {
     title: string;
     description: string;
     category: string;
-    created_at: string;
+    created_at: Date;
     className?: string;
 }
 
@@ -19,12 +21,14 @@ export default function BlogCard({
     description,
     category,
     created_at,
-}: BlogCardProps){
+    }: BlogCardProps){
+
+    const [formattedDate] = formatDate(created_at)
     return (
         <Link 
             className={className}
             href={"/"}>
-                <div className='h-70 max-w-98 border rounded-sm mt-4'>
+                <div className='min-h-70 max-w-98 border rounded-sm mt-4'>
                     <div className='h-[150px] relative rounded-sm overflow-hidden'>
                         <Image
                             src="/assets/images/blog_image_example.jpg"
@@ -35,10 +39,10 @@ export default function BlogCard({
                         </Image>
                     </div>
                     <div className='flex flex-col mt-2 gap-1'>
-                        <p className='text-xs'> {author} <span className='font-bold'>·</span> {created_at} </p>
+                        <p className='text-xs'> {author} <span className='font-bold'>·</span> {formattedDate} </p>
                         <h3 className='line-clamp-2 font-bold text-lg'>{title}</h3>
                         <p className='text-xs line-clamp-3 mb-2'>{description}</p>
-                        <p className='text-xs w-fit p-2 font-bold rounded-2xl bg-slate-400'>{category}</p>
+                        <Badge>{category}</Badge>
                     </div>
                 </div>
         </Link>

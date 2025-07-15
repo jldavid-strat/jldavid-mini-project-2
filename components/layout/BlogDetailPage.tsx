@@ -6,11 +6,10 @@ import Comment from '@/components/ui/Comment';
 import { Badge } from '@/components/ui/Badge';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+// import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartOutline } from '@fortawesome/free-regular-svg-icons';
 import { faComment as faCommentOutline} from '@fortawesome/free-regular-svg-icons';
 import { faPenToSquare as faPenToSquareOutline} from '@fortawesome/free-regular-svg-icons';
-import { faEdit as faEditOutline} from '@fortawesome/free-regular-svg-icons';
 import { faTrashCan as faTrashCanOutline} from '@fortawesome/free-regular-svg-icons';
 import styles from '@/styles/StickyMenuBar.module.css';
 import Link from 'next/link';
@@ -39,7 +38,6 @@ interface ExtendedBlogProps {
   blog: BlogProps;
   commentList: Comment[];
   formattedDate: string;
-  formattedTime: string;
 }
 
 
@@ -98,7 +96,6 @@ export default function BlogDetailPage ({
     blog,
     commentList, 
     formattedDate, 
-    formattedTime,
 }: ExtendedBlogProps) {
 
     const startRef = useRef<HTMLDivElement | null>(null);
@@ -124,10 +121,16 @@ export default function BlogDetailPage ({
 
   
     return (
-        <div className='mx-2 lg:mx-auto mt-6 max-w-[980px]'>
-            <div ref={startRef}  className='mb-2 group flex flex-col md:relative md:flex-row-reverse justify-between'>
-                <div className='w-full'>
-                    <h2 className='text-3xl font-bold text-center'>{blog.title}</h2>
+        <div className='mx-2 lg:mx-auto mt-8 max-w-[980px]'>
+            <div ref={startRef}  className='mb-4 group flex flex-col md:relative md:flex-row-reverse justify-between'>
+                <div className='min-w-[300px] max-w-[600px] mx-auto flex flex-col justify-center items-center'>
+                    <Badge className='mb-2'><p>{blog.category}</p></Badge>
+                    <h2 className='text-3xl font-bold text-center'>Secrets from the Algorithm: Google Search Internal Engineering Has Leaked</h2>
+                    <section className='mt-6 mb-2 flex flex-row gap-2 text-gray-500'>
+                        <p>By {blog.author}</p>
+                        <p>|</p>
+                        <p>{formattedDate}</p>
+                    </section>
                 </div>
                 <div className='flex flex-row gap-3 justify-center md:absolute md:mt-3 z-10'>
                     <div className='opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer no-underline hover:underline hover:underline-offset-4 text-black font-bold'>Edit</div>
@@ -135,7 +138,7 @@ export default function BlogDetailPage ({
                     hover:underline-offset-4 text-black font-bold'>Delete</div>
                 </div>
             </div>
-            <div className='mt-2 bg-slate-200 w-full lg:w-[980x] h-30 md:h-70 lg:h-[600px] aspect-16/9 rounded-sm grow-0 relative overflow-hidden'>
+            <div className='mt-2 mb-4 bg-slate-200 w-full lg:w-[980x] h-30 md:h-70 lg:h-[250px] aspect-16/9 rounded-sm grow-0 relative overflow-hidden'>
                 <Image
                     src={`/assets/images/${blog.img_link}`}
                     alt='uploaded cover image preview'
@@ -145,22 +148,7 @@ export default function BlogDetailPage ({
             </div>
 
 
-            <section className='mt-2 mb-2 flex flex-col md:flex-row md:justify-between gap-1'>
-                <div className='flex flex-col gap-1'>
-                    <p>Published by <span className='font-bold'>{blog.author}</span></p>
-                    <Badge>
-                        <p>{blog.category}</p>
-                    </Badge>
-                </div>
-                <div className='flex flex-col md:text-right'>
-                    <p>{formattedDate}</p>
-                    <p>{formattedTime}</p>
-                </div>
-            </section>
-
-
-            <div className='w-full border mb-4'></div>
-            {/* render content ast markdown */}
+            {/* content rendered as markdown */}
             <MarkdownContent source={blog.content} colorMode='light'/>
             <div className='mt-8 w-full border mb-4'></div>
             <h3 className='mb-4 text-2xl font-bold'>Leave a Comment</h3>
@@ -169,7 +157,7 @@ export default function BlogDetailPage ({
                 />
             <div className='mt-8 w-full border mb-4'></div>
             <h3 id='comment-section' className='mb-4 text-2xl font-bold'>Comments</h3>
-            <section className='grid grid-cols-1 md:grid-cols-2 gap-4 mb-10'>
+            <section className='app/blog/[slug]grid grid-cols-1 md:grid-cols-2 gap-4 mb-10'>
                 {
                     commentList.length > 0 
                     ? Object.values(commentList).map(

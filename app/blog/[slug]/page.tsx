@@ -27,7 +27,7 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
     const blogResult = await db.select().from(blogs).where(eq(blogs.id, blogId))
     const blog = blogResult[0]
     
-    const [formattedDate, formattedTime] = formatDate(blog.created_at)
+    const [formattedDate] = formatDate(blog.created_at)
     
     if(!blog) return (
         <div className='text-xl bg-slate-400 text-red w-100 h-100 justify-center items-center'>
@@ -40,7 +40,6 @@ export default async function BlockDetailPage({params} : BlogDetailPageProps){
             blog={blog}
             commentList={commentList}
             formattedDate={formattedDate}
-            formattedTime={formattedTime}
         />
     )
 }

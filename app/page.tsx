@@ -8,9 +8,11 @@ export default async function Home() {
   console.log(blogList)
   return (
     <Fragment>
-      <div className="flex flex-col mt-4">
-        <h2 className="text-black font-bold text-xl">Latest Blogs</h2>
-        <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, saepe. Sapiente sed reiciendis saepe doloribus modi voluptatibus sunt numquam nobis dolorum. At corrupti veniam quam vel sequi! Fugit impedit recusandae iusto, ab velit illo tempore corporis voluptate ullam delectus exercitationem non minima consequuntur tenetur mollitia eaque eligendi debitis ea magnam beatae nihil praesentium molestiae. Officiis, rem praesentium. Cumque aut modi, ea voluptates sunt nisi architecto. Doloribus rerum tempore dolor voluptas!</p>
+      <div className="mt-4 mx-2 flex flex-row justify-center">
+        <div className="min-w-[150px] max-w-[600px] flex flex-col justify-center items-center">
+          <h2 className="text-black font-bold text-2xl">Welcome to ThinkThread</h2>
+          <p className="text-sm text-center mt-2">Your space to explore insightful threads on programming, tech trends, and creative development ideas. Whether you&apos;re here to learn, share, or just stay inspired — we&apos;re glad you&apos;re here. Dive in and discover what the tech world is thinking.</p>
+        </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "> 
         {

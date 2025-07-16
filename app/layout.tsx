@@ -20,6 +20,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "thinkthread",
   description: "A simple blog website where anyone can post and share their blogs",
+  icons: [
+    {url: '/assets/icons/thinkthread.ico'},
+  ],
 };
 
 export default function RootLayout({

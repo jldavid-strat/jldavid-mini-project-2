@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Navbar(){
     return (
@@ -7,7 +8,15 @@ export default function Navbar(){
             <nav className='max-w-[1200px] mx-2 lg:mx-auto py-4 text-white font-bold'>
                 <div className='flex justify-between items-center'>
                     <Link href={'/'}>
-                        <h1>thinkthread</h1>
+                        <div className='flex flex-row gap-2 justify-center items-center'>
+                            <Image
+                                src={'/assets/icons/thinkthread.png'}
+                                alt='thinkthread icon'
+                                width={30}
+                                height={30}
+                            />
+                            <h1>thinkthread</h1>
+                        </div>
                     </Link>
                     <div className='flex gap-6 items-center'>
                         <Link

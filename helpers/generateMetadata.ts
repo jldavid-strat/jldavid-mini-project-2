@@ -1,4 +1,3 @@
-// Individual Blog Metadata Generator
 
 export default function generateIndividualBlogMetadata(blog) {
   const {

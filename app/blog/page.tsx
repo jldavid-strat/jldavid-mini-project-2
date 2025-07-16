@@ -21,6 +21,7 @@ export default async function BlogPage(){
                     author={blog.author}
                     description={blog.description}
                     category={blog.category}
+                    img_link={blog.img_link}
                     created_at={blog.created_at}
                 />
                 ))

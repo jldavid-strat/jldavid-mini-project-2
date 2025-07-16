@@ -26,6 +26,8 @@ interface BlogProps {
   img_link: string;
   likes:number;
   content: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 interface Comment{
@@ -198,7 +200,6 @@ export default function BlogDetailPage ({
             }}
          />
         </div>
-        
 
 )
 }

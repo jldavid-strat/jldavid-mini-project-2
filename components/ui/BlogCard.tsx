@@ -31,7 +31,7 @@ export default function BlogCard({
         <Link 
             className={className}
             href={`/blog/${id}`}>
-                <div className='h-80 max-w-98 rounded-sm border-2 overflow-hidden hover:shadow-sm flex flex-col'>
+                <div className='h-85 max-w-98 rounded-sm border-2 overflow-hidden hover:shadow-sm flex flex-col'>
                     <div className='h-[150px] relative overflow-hidden flex-shrink-0'>
                         <Image
                             src={`/assets/images/${img_link}`}
@@ -40,11 +40,11 @@ export default function BlogCard({
                             fill
                         />
                     </div>
-                    <div className='flex flex-col mt-2 gap-1 p-2 flex-1'>
+                    <div className='flex flex-col mt-2 gap-1 p-2 flex-1 mb-2'>
                         <p className='text-xs text-gray-500'> {author} <span className='font-bold'>·</span> {formattedDate} </p>
                         <h3 className='line-clamp-2 font-bold text-lg'>{title}</h3>
                         <p className='text-xs line-clamp-3 mb-2 flex-1'>{description}</p>
-                        <Badge className='mt-auto mb-2'>{category}</Badge>
+                        <Badge className='mt-auto'>{category}</Badge>
                     </div>
                 </div>
         </Link>

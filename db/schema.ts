@@ -8,7 +8,7 @@ export const blogs = pgTable('blogs', {
     content: varchar().notNull(),
     category: varchar({length: 255}).notNull(),
     img_link: varchar().notNull(),
-    likes: integer().default(0),
+    likes: integer().default(0).notNull(),
     created_at: timestamp().notNull().defaultNow(),
     updated_at: timestamp().defaultNow().$onUpdate(() => new Date()),
 })

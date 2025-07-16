@@ -27,7 +27,7 @@ interface BlogProps {
   likes:number;
   content: string;
   created_at: Date;
-  updated_at: Date;
+  updated_at: Date | null;
 }
 
 interface Comment{

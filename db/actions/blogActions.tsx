@@ -89,4 +89,19 @@ async function dislikeBlog(blogId: number){
 }
 
 
+    async function handleDelete(){
+        try{
+            await deleteBlog({blogId})
+            console.log('blogid to be deleted',blogId)   
+            
+            toast.success('Blog post successfully deleted!');
+            router.push('/blog')
+        }
+        catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error('Failed to create blog post. Please try again.');
+        }
+
+    }
+
 export {createBlog , deleteBlog, updateBlog, likeBlog, dislikeBlog}

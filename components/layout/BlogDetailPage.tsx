@@ -64,7 +64,7 @@ function StickyMenuBar(
     }
     return(
         <div className={`sticky bottom-5 w-[980px] z-50 ${styles.popIn}`}>
-            <div className='rounded-full bg-black text-slate-50 h-12 w-68 mx-auto '>
+            <div className='rounded-full bg-black text-slate-50 h-12 w-68 mx-auto'>
                 <div className='flex flex-row justify-center items-center w-full gap-4 h-full'>
                         <LikeButton
                             blogId={blogId}
@@ -136,7 +136,9 @@ export default function BlogDetailPage ({
                     </section>
                 </div>
                 <div className='flex flex-row gap-3 justify-center md:absolute md:mt-3 z-10'>
-                    <div className='opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer no-underline hover:underline hover:underline-offset-4 text-black font-bold'>Edit</div>
+                    <Link href={`/blog/${blog.id}/edit-blog`}>
+                        <div className='opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer no-underline hover:underline hover:underline-offset-4 text-black font-bold'>Edit</div>
+                    </Link>
                     <div className='opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer hover:underline
                     hover:underline-offset-4 text-black font-bold'>Delete</div>
                 </div>
@@ -160,17 +162,17 @@ export default function BlogDetailPage ({
                 />
             <div className='mt-8 w-full border mb-4'></div>
             <h3 id='comment-section' className='mb-4 text-2xl font-bold'>Comments</h3>
-            <section className='app/blog/[slug]grid grid-cols-1 md:grid-cols-2 gap-4 mb-10'>
+            <section className='grid grid-cols-1 gap-4 mb-10 '>
                 {
                     commentList.length > 0 
                     ? Object.values(commentList).map(
                         (comment, index) => 
                             (       
                                 <Comment
-                                key={index}
-                                name={comment.written_by}
-                                message={comment.detail}
-                                created_at={comment.created_at}
+                                    key={index}
+                                    name={comment.written_by}
+                                    message={comment.detail}
+                                    created_at={comment.created_at}
                                 />
                             ) 
                         ):
@@ -182,8 +184,8 @@ export default function BlogDetailPage ({
             {
                 showToolbar && <StickyMenuBar iconSize={iconSize} blogId={blog.id} likeCounter={blog.likes}/>
             }
-            <div ref={endRef} className='w-full h-100'>
-                    should end here
+            <div ref={endRef} className='w-full h-20'>
+                
             </div>
             
 

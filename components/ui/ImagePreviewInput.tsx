@@ -19,7 +19,7 @@ export default function ImagePreviewInput(
     { selectedImage, setSelectedImage }: ImagePreviewInputProps
 ){
     const defaultOption = {value: 'bg-1.jpg', label:'bg-1.jpg'}
-    const [imagePreview, setImagePreview] = useState(selectedImage?.value ?? "/assets/images/bg-1.jpg")
+    const [imagePreview, setImagePreview] = useState(`/assets/images/${selectedImage?.value}` || "/assets/images/bg-1.jpg")
     const [imageOptions, setImageOptions] = useState<Option[]>([defaultOption])
 
     // Fetch images

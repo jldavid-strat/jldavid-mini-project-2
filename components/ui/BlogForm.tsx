@@ -27,7 +27,7 @@ interface BlogProps {
 export default function BlogForm({BlogData}:{BlogData?: BlogProps}){
 
     // get the file name from the filepath (i.e 'assets/images/${filename}')
-
+    console.log(BlogData)
     const [markdownContent, setMarkdownContent] = useState(BlogData?.content ?? "")
     const [selectedImage, setSelectedImage] = useState<Option | null>(
     BlogData

@@ -1,19 +1,16 @@
 "use client"
 
-import React, {useState} from 'react'
+import React, {useRef, useState} from 'react'
 import { Label, CustomLabel } from '../ui/Label'
 import { Input } from '@/components/ui/Input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/RadioGroup'
 import { Textarea } from '../ui/TextArea'
 import { addComment } from '@/db/actions/commentActions'
-// import { db } from '@/db/db'
-// import { comments } from '@/db/schema'
-
-
 
 
 export default function CommentForm ({blogId} : {blogId: number}){
     const [isAnonymous, setIsAnonymous] = useState("yes")
+    const formRef = useRef<HTMLFormElement>(null);
 
     const handledSelectRadioButton = (value: string) => {
         setIsAnonymous(value)
@@ -25,12 +22,16 @@ export default function CommentForm ({blogId} : {blogId: number}){
         const formData = new FormData(e.currentTarget);
         formData.append("blogId", blogId.toString());
 
+            
+        // reset the form
+        formRef.current?.reset();
+
         await addComment(formData);
     }
 
     return (
         <section>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-3">
                 <div className='flex flex-row'>
                     <CustomLabel
                         htmlFor='set-anononymity'
@@ -75,11 +76,12 @@ export default function CommentForm ({blogId} : {blogId: number}){
                     />
                     <Textarea
                         name='message'
-                        placeholder='Share your thoughts about the blog'                    
+                        placeholder='Share your thoughts about the blog'
+                        required={true}                    
                     >
                     </Textarea>
                 </div>
-              <div><button type="submit" className='border border-black w-fit p-2 rounded-2xl font-bold'>Comment</button></div>
+              <div><button type="submit" className='border border-black w-fit p-2 rounded-2xl font-bold hover:cursor-pointer'>Comment</button></div>
             </form>
         </section>
     )

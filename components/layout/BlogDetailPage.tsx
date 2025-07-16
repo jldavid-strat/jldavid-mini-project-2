@@ -50,8 +50,8 @@ function StickyMenuBar(
     const router = useRouter()
     async function handleDelete(){
         try{
-            await deleteBlog({blogId})
             console.log('blogid to be deleted',blogId)   
+            await deleteBlog(blogId)
             
             toast.success('Blog post successfully deleted!');
             router.push('/blog')

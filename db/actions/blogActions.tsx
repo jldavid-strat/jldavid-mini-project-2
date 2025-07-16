@@ -1,8 +1,8 @@
 "use server"
 
-import { AnyColumn, eq, sql } from "drizzle-orm";
+import { AnyColumn, eq, inArray, sql } from "drizzle-orm";
 import { db } from "../db"
-import { blogs } from "../schema"
+import { blogs, comments, comments_to_blogs } from "../schema"
 import { revalidatePath } from "next/cache";
 
 const increment = (column: AnyColumn, value = 1) => {
@@ -58,12 +58,42 @@ async function updateBlog (
 }
 
 
-async function deleteBlog({blogId}: {blogId:number}){
-    await db.delete(blogs).where(eq(blogs.id,blogId))
+async function deleteBlog(blogId: number) {
+    try {
+        // get all comments in this blog
+        const commentIds = await db
+        .select({ comment_id: comments_to_blogs.comment_id })
+        .from(comments_to_blogs)
+        .where(eq(comments_to_blogs.blog_id, blogId));
+        
+        if (commentIds.length === 0) {
+            return { success: true, message: 'No comments to delete' };
+        }
+        
+        const commentIdArray = commentIds.map(c => c.comment_id);
 
-    // TODO delete comments in the blog
+        // delete from comments in comments-to-blog
+        await db
+        .delete(comments_to_blogs)
+        .where(eq(comments_to_blogs.blog_id, blogId));
+        
+        // Then delete the actual comments
+        await db
+        .delete(comments)
+        .where(inArray(comments.id, commentIdArray));
+        
+        // finally delete the actual blog
+        await db.delete(blogs).where(eq(blogs.id,blogId))
+
+        // revalidate the blog page to reflect changes
+        revalidatePath(`/blog/${blogId}`);
+        
+        return { success: true, message: `Deleted ${commentIds.length} comments` };
+    } catch (error) {
+        console.error('Error deleting blog comments:', error);
+        return { success: false, error: 'Failed to delete comments' };
+  }
 }
-
 async function likeBlog(blogId: number){
     await db.
         update(blogs).
@@ -88,20 +118,20 @@ async function dislikeBlog(blogId: number){
     revalidatePath(`/blog/${blogId}`)
 }
 
+async function getFeaturedBlogs(){
+    try {
+        const commentIds = await db
+        .select({ comment_id: comments_to_blogs.comment_id })
+        .from(comments_to_blogs)
+        .where(eq(comments_to_blogs.blog_id, blogId));
+        
+        
+        return { success: true, message: `Retrieved featured ${commentIds.length} blogs` };
+    } catch (error) {
+        console.error('Error retrieving featured blog:', error);
+        return { success: false, error: 'Failed to delete comments' };
+  }
+}
 
-    async function handleDelete(){
-        try{
-            await deleteBlog({blogId})
-            console.log('blogid to be deleted',blogId)   
-            
-            toast.success('Blog post successfully deleted!');
-            router.push('/blog')
-        }
-        catch (error) {
-            console.error('Error submitting form:', error);
-            toast.error('Failed to create blog post. Please try again.');
-        }
-
-    }
 
 export {createBlog , deleteBlog, updateBlog, likeBlog, dislikeBlog}

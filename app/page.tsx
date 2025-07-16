@@ -1,10 +1,10 @@
 import { FeatureCard, FeatureHorizontalCard } from "@/components/ui/FeatureCards";
-import { db } from "@/db/db";
-import {blogs} from '@/db/schema'
+// import { db } from "@/db/db";
+// import {blogs} from '@/db/schema'
 import { Fragment } from "react";
 
 export default async function Home() {
-  const blogList = await db.select().from(blogs).orderBy(blogs.created_at);
+  // const blogList = await db.select().from(blogs).orderBy(blogs.created_at);
   return (
     <Fragment>
       <div className="mt-4 mb-8 mx-2 flex flex-row justify-center">

@@ -4,7 +4,6 @@ import { blogs } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { getCommentsByBlogId } from '@/db/actions/commentActions';
 import {formatDate} from '@/helpers/helper';
-
 import BlogDetailPage from '@/components/layout/BlogDetailPage';
 
 type BlogDetailPageProps = {
@@ -13,7 +12,7 @@ type BlogDetailPageProps = {
     }
 }
 
-export default async function BlockDetailPage({params} : BlogDetailPageProps){
+export default async function BDetailPage({params} : BlogDetailPageProps){
     const slug = await params
     const blogId = parseInt(slug.slug)
     const commentList = await getCommentsByBlogId(blogId)

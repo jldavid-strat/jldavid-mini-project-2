@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { deleteBlog } from '@/db/actions/blogActions';
 import { useRouter } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast';
+import LikeButton from '../ui/LikeButton';
 
 
 interface BlogProps {
@@ -25,6 +26,7 @@ interface BlogProps {
   category: string;
   description: string;
   img_link: string;
+  likes:number;
   content: string;
 }
 
@@ -43,7 +45,7 @@ interface ExtendedBlogProps {
 
 
 function StickyMenuBar(
-    {iconSize, blogId}: {iconSize: number, blogId:number}
+    {iconSize, blogId, likeCounter}: {iconSize: number, blogId:number, likeCounter: number}
 ){
     const router = useRouter()
     async function handleDelete(){
@@ -65,8 +67,11 @@ function StickyMenuBar(
             <div className='rounded-full bg-black text-slate-50 h-12 w-68 mx-auto '>
                 <div className='flex flex-row justify-center items-center w-full gap-4 h-full'>
                     <div className='flex flex-row justify-center items-center gap-2'>
-                        <FontAwesomeIcon icon={faHeartOutline} fontSize={iconSize} className='hover:scale-[1.5] cursor-pointer'/>
-                        <div className='text-lg'>1</div>
+                        <LikeButton
+                            blogId={blogId}
+                            likeCount={likeCounter}
+                            iconSize={iconSize}
+                        />
                     </div>
                     <div className='w-0.5 h-7 bg-white'></div>
                     <div>
@@ -125,7 +130,7 @@ export default function BlogDetailPage ({
             <div ref={startRef}  className='mb-4 group flex flex-col md:relative md:flex-row-reverse justify-between'>
                 <div className='min-w-[300px] max-w-[600px] mx-auto flex flex-col justify-center items-center'>
                     <Badge className='mb-2'><p>{blog.category}</p></Badge>
-                    <h2 className='text-3xl font-bold text-center'>Secrets from the Algorithm: Google Search Internal Engineering Has Leaked</h2>
+                    <h2 className='text-3xl font-bold text-center'>{blog.title}</h2>
                     <section className='mt-6 mb-2 flex flex-row gap-2 text-gray-500'>
                         <p>By {blog.author}</p>
                         <p>|</p>
@@ -177,7 +182,7 @@ export default function BlogDetailPage ({
                 }
             </section>
             {
-                showToolbar && <StickyMenuBar iconSize={iconSize} blogId={blog.id}/>
+                showToolbar && <StickyMenuBar iconSize={iconSize} blogId={blog.id} likeCounter={blog.likes}/>
             }
             <div ref={endRef} className='w-full h-100'>
                     should end here

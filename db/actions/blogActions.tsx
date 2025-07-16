@@ -1,8 +1,17 @@
 "use server"
 
-import { eq } from "drizzle-orm";
+import { AnyColumn, eq, sql } from "drizzle-orm";
 import { db } from "../db"
 import { blogs } from "../schema"
+import { revalidatePath } from "next/cache";
+
+const increment = (column: AnyColumn, value = 1) => {
+  return sql`${column} + ${value}`;
+};
+
+const decrement = (column: AnyColumn, value = 1) => {
+  return sql`${column} - ${value}`;
+};
 
 async function createBlog (blogFormData: {
     title: string;
@@ -51,8 +60,33 @@ async function updateBlog (
 
 async function deleteBlog({blogId}: {blogId:number}){
     await db.delete(blogs).where(eq(blogs.id,blogId))
+
+    // TODO delete comments in the blog
+}
+
+async function likeBlog(blogId: number){
+    await db.
+        update(blogs).
+        set({
+            likes: increment(blogs.likes)
+        })
+        .where(eq(blogs.id, blogId))
+
+    // quickly load like counter
+    revalidatePath(`/blog/${blogId}`)
+}
+    
+async function dislikeBlog(blogId: number){
+    await db.
+        update(blogs).
+        set({
+            likes: decrement(blogs.likes)
+        })
+        .where(eq(blogs.id, blogId))
+    
+    // quickly load like counter
+    revalidatePath(`/blog/${blogId}`)
 }
 
 
-
-export {createBlog , deleteBlog, updateBlog}
+export {createBlog , deleteBlog, updateBlog, likeBlog, dislikeBlog}

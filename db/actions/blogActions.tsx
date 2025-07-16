@@ -9,7 +9,7 @@ async function createBlog (blogFormData: {
     author: string;
     category: string;
     description: string;
-    image_link: string;
+    image_filename: string;
     content: string;
     created_at: Date;
 }){
@@ -18,7 +18,7 @@ async function createBlog (blogFormData: {
         author: blogFormData.author,
         description: blogFormData.description,
         category: blogFormData.category,
-        img_link: blogFormData.image_link,
+        img_link: blogFormData.image_filename,
         content: blogFormData.content,
         created_at: blogFormData.created_at,
     }).returning({id : blogs.id})
@@ -33,7 +33,7 @@ async function updateBlog (
         author: string;
         category: string;
         description: string;
-        image_link: string;
+        image_filename: string;
         content: string;
         created_at: Date;
     }){
@@ -42,7 +42,7 @@ async function updateBlog (
         author: blogFormData.author,
         description: blogFormData.description,
         category: blogFormData.category,
-        img_link: blogFormData.image_link,
+        img_link: blogFormData.image_filename,
         content: blogFormData.content,
         created_at: blogFormData.created_at,
     }).where(eq(blogs.id, blogIdEdit))

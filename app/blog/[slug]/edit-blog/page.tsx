@@ -10,7 +10,9 @@ type BlogDetailPageProps = {
     }
 }
 export default async function EditBlogPage({ params }: BlogDetailPageProps) {
-    const blogId = parseInt(params.slug);
+    
+    const param = await params
+    const blogId = parseInt(param.slug);
 
     if (isNaN(blogId)) {
         return <div>Invalid blog ID</div>;

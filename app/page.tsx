@@ -24,7 +24,7 @@ export default async function Home() {
               className="w-full"
             />
         <div className="flex mt-10 md:mt-0 flex-col gap-2">
-          <h3 className="font-bold text-2xl">Featured Blogs</h3>
+          <h3 className="font-bold text-2xl p-2">Featured Blogs</h3>
           <FeatureHorizontalCard 
               id={1}
               title={'blog.title'}

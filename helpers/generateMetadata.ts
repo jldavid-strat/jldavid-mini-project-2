@@ -83,3 +83,15 @@ export default function generateIndividualBlogMetadata(blog) {
   };
 }
 
+export function AddBlogPageMetadata(){
+  return {
+    title: 'Add Blog Page',
+    description: 'A page for creating new blogs in thinkthread',
+  }
+}
+export function EditBlogPageMetadata(){
+  return {
+    title: 'Edit Blog Page',
+    description: 'A page for editing a specific blog in thinkthread',
+  }
+}

@@ -14,7 +14,6 @@ interface Option {
   label: string;
 }
 
-
 export default function AddBlogPage(){
 
   const [markdownContent, setMarkdownContent] = useState("") 

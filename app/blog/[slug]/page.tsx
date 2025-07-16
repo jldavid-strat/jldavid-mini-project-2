@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
       ],
     },
     twitter: {
-      card: metadata.twitter.card,
+      card: "summary_large_image",
       title: metadata.twitter.title,
       images: [metadata.twitter.images[0]],
     },

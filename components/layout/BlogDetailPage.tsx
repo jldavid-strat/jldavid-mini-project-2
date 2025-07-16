@@ -6,8 +6,6 @@ import Comment from '@/components/ui/Comment';
 import { Badge } from '@/components/ui/Badge';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartOutline } from '@fortawesome/free-regular-svg-icons';
 import { faComment as faCommentOutline} from '@fortawesome/free-regular-svg-icons';
 import { faPenToSquare as faPenToSquareOutline} from '@fortawesome/free-regular-svg-icons';
 import { faTrashCan as faTrashCanOutline} from '@fortawesome/free-regular-svg-icons';
@@ -66,13 +64,11 @@ function StickyMenuBar(
         <div className={`sticky bottom-5 w-[980px] z-50 ${styles.popIn}`}>
             <div className='rounded-full bg-black text-slate-50 h-12 w-68 mx-auto '>
                 <div className='flex flex-row justify-center items-center w-full gap-4 h-full'>
-                    <div className='flex flex-row justify-center items-center gap-2'>
                         <LikeButton
                             blogId={blogId}
                             likeCount={likeCounter}
                             iconSize={iconSize}
                         />
-                    </div>
                     <div className='w-0.5 h-7 bg-white'></div>
                     <div>
                         <Link href='#comment-section'>

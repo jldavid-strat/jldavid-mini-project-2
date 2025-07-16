@@ -57,18 +57,20 @@ export default function LikeButton({
 
   return (
     <Fragment>
-      <button 
-        onClick={handleLikeToggle}
-        disabled={optimisticLikes.sending}
-        className={optimisticLikes.sending ? 'opacity-50' : ''}
-      >
-        <FontAwesomeIcon
-          icon={isLiked ? faHeartSolid : faHeartOutline}
-          fontSize={iconSize}
-          className="cursor-pointer"
-        />
-      </button>
-      <div className="text-lg">{optimisticLikes.likeCount}</div>
+        <div className='flex flex-row justify-center items-center gap-2'>
+            <button 
+                onClick={handleLikeToggle}
+                disabled={optimisticLikes.sending}
+                className={optimisticLikes.sending ? 'opacity-50 flex justify-center' : 'flex justify-center'}
+            >
+                <FontAwesomeIcon
+                icon={isLiked ? faHeartSolid : faHeartOutline}
+                fontSize={iconSize}
+                className="cursor-pointer"
+                />
+            </button>
+            <div className="text-lg">{optimisticLikes.likeCount}</div>
+        </div>
     </Fragment>
   )
 }

@@ -10,14 +10,17 @@ interface BlogCardProps {
     description: string;
     category: string;
     created_at: Date;
+    img_link: string;
     className?: string;
 }
 
 export function FeatureCard({
+    id,
     author,
     className,
     title,
     description,
+    img_link,
     category,
     created_at,
     }: BlogCardProps){
@@ -26,11 +29,11 @@ export function FeatureCard({
     return (
         <Link 
             className={className}
-            href={"/"}>
+            href={`/blog/${id}`}>
                 <div className='h-auto ring-0 hover:ring hover:rounded-xl'>
                     <div className='h-[400px] relative rounded-t-xl overflow-hidden'>
                         <Image
-                            src="/assets/images/bg-1.jpg"
+                            src={`/assets/images/${img_link}`}
                             alt="blog image example"
                             className='object-cover'
                             fill
@@ -48,19 +51,20 @@ export function FeatureCard({
     )
 }
 export function FeatureHorizontalCard({
+    id,
     author,
     className,
     title,
     description,
     category,
     created_at,
-    }: BlogCardProps){
+    }: Omit<BlogCardProps, 'img_link'>){
 
     const [formattedDate] = formatDate(created_at)
     return (
         <Link 
             className={className}
-            href={"/"}>
+            href={`/blog/${id}`}>
                 <div className='ring-0 hover:ring rounded-xs'>
                     <div className='p-2 flex flex-col gap-2'>
                         <p className='text-xs text-gray-500'> {author} <span className='font-bold'>·</span> {formattedDate} </p>

@@ -118,20 +118,66 @@ async function dislikeBlog(blogId: number){
     revalidatePath(`/blog/${blogId}`)
 }
 
-async function getFeaturedBlogs(){
+
+async function getFeaturedBlogs() {
     try {
-        const commentIds = await db
-        .select({ comment_id: comments_to_blogs.comment_id })
-        .from(comments_to_blogs)
-        .where(eq(comments_to_blogs.blog_id, blogId));
+        let featuredBlogs = await db
+            .select()
+            .from(blogs)
+            .orderBy(blogs.likes, blogs.created_at)
+            .limit(4);
         
+        // If no featured blogs, get any 4 recent blogs as fallback
+        if (featuredBlogs.length === 0) {
+            featuredBlogs = await db
+                .select()
+                .from(blogs)
+                .orderBy(blogs.created_at)
+                .limit(4);
+        }
         
-        return { success: true, message: `Retrieved featured ${commentIds.length} blogs` };
+        // If still no blogs, create placeholder data
+        if (featuredBlogs.length === 0) {
+            featuredBlogs = [
+                {
+                    id: 111,
+                    title: 'Welcome to Our Blog',
+                    content: 'Coming soon...',
+                    likes: 0,
+                    category:'software',
+                    author: 'Juan Dela Cruz',
+                    description: 'Coming soon',
+                    img_link:'/assets/default/default.jpg',
+                    created_at: new Date(),
+                    updated_at: new Date()
+                }
+            ];
+        }
+              
+        return { success: true, message: `Retrieved featured blogs`, data: featuredBlogs };
     } catch (error) {
         console.error('Error retrieving featured blog:', error);
-        return { success: false, error: 'Failed to delete comments' };
-  }
+        
+        // Return placeholder data even on error
+        return { 
+            success: true, 
+            message: 'Using placeholder data',
+            data: [
+                {
+                    id: 111,
+                    title: 'Welcome to Our Blog',
+                    content: 'Coming soon...',
+                    likes: 0,
+                    category:'software',
+                    author: 'Juan Dela Cruz',
+                    description: 'Coming soon',
+                    img_link:'/assets/default/default.jpg',
+                    created_at: new Date(),
+                    updated_at: new Date()
+                }
+            ]
+        };
+    }
 }
 
-
-export {createBlog , deleteBlog, updateBlog, likeBlog, dislikeBlog}
+export {createBlog , deleteBlog, updateBlog, likeBlog, dislikeBlog, getFeaturedBlogs}

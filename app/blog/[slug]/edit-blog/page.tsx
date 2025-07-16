@@ -1,6 +1,7 @@
 import BlogForm from '@/components/ui/BlogForm'
 import { db } from '@/db/db'
 import { blogs } from '@/db/schema'
+import { EditBlogPageMetadata } from '@/helpers/generateMetadata'
 import { eq } from 'drizzle-orm'
 import React from 'react'
 
@@ -9,8 +10,15 @@ type BlogDetailPageProps = {
         slug: string;
     }
 }
+
+export async function generateMetadata(){
+    return EditBlogPageMetadata()
+}
+
 export default async function EditBlogPage({ params }: BlogDetailPageProps) {
-    const blogId = parseInt(params.slug);
+    
+    const param = await params
+    const blogId = parseInt(param.slug);
 
     if (isNaN(blogId)) {
         return <div>Invalid blog ID</div>;

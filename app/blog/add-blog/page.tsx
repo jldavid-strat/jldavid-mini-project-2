@@ -14,7 +14,6 @@ interface Option {
   label: string;
 }
 
-
 export default function AddBlogPage(){
 
   const [markdownContent, setMarkdownContent] = useState("") 
@@ -33,7 +32,7 @@ export default function AddBlogPage(){
         author: formData.get("author") as string,
         description: formData.get("description") as string,
         category: formData.get("category") as string,
-        image_link: selectedImage?.value || '/assets/images/blog_image_example.jpg',
+        image_filename: `${selectedImage?.value}` || 'default.jpg',
         content: markdownContent as string,
         created_at: new Date(),
       }

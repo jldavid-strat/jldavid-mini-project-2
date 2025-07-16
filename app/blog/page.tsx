@@ -7,8 +7,11 @@ export default async function BlogPage(){
     const blogList = await db.select().from(blogs).orderBy(blogs.created_at);
     return (
         <div>
-            <h2>All Blogs</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "> 
+            <section className="mx-2 mt-4 mb-4">
+                <h2 className="text-black font-bold text-4xl">All Blogs</h2>
+                <p className="text-sm mt-2">Check out the latest posts from the ThinkThread community — from coding tips to tech thoughts and everything in between.</p>
+            </section>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 "> 
             {
                 blogList.map((blog) => (
                 <BlogCard 
@@ -18,6 +21,7 @@ export default async function BlogPage(){
                     author={blog.author}
                     description={blog.description}
                     category={blog.category}
+                    img_link={blog.img_link}
                     created_at={blog.created_at}
                 />
                 ))

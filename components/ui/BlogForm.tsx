@@ -24,9 +24,10 @@ interface BlogProps {
   content: string;
 }
 
-export default function BlogForm(
-    {BlogData}:{BlogData?: BlogProps}
-){
+export default function BlogForm({BlogData}:{BlogData?: BlogProps}){
+
+    // get the file name from the filepath (i.e 'assets/images/${filename}')
+    console.log(BlogData)
     const [markdownContent, setMarkdownContent] = useState(BlogData?.content ?? "")
     const [selectedImage, setSelectedImage] = useState<Option | null>(
     BlogData
@@ -47,7 +48,7 @@ export default function BlogForm(
             author: formData.get("author") as string,
             description: formData.get("description") as string,
             category: formData.get("category") as string,
-            image_link: selectedImage?.value || '/assets/default/default_cover_image.jpg',
+            image_filename: selectedImage?.value || '/assets/default/default_cover_image.jpg',
             content: markdownContent,
             created_at: new Date(),
         }

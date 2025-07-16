@@ -18,8 +18,9 @@ interface ImagePreviewInputProps {
 export default function ImagePreviewInput(
     { selectedImage, setSelectedImage }: ImagePreviewInputProps
 ){
-    const [imagePreview, setImagePreview] = useState(`/assets/images/${selectedImage?.value}`||"/assets/images/bg-1.jpg")
-    const [imageOptions, setImageOptions] = useState<Option[]>([{value: 'bg-1.jpg', label:'bg-1.jpg'}])
+    const defaultOption = {value: 'bg-1.jpg', label:'bg-1.jpg'}
+    const [imagePreview, setImagePreview] = useState(`/assets/images/${selectedImage?.value}` || "/assets/images/bg-1.jpg")
+    const [imageOptions, setImageOptions] = useState<Option[]>([defaultOption])
 
     // Fetch images
     useEffect(() => {
@@ -57,13 +58,13 @@ export default function ImagePreviewInput(
             options={imageOptions}
             isMulti={false}
             onChange={handleImageSelect}
-            value={selectedImage}
+            value={selectedImage ?? defaultOption}
             defaultValue={selectedImage}
             placeholder="Select an image..."
         />
             {
                 imagePreview ? 
-                <div className='mt-2 bg-slate-200 w-full lg:w-[1165px] h-30 md:h-70 lg:h-[600px] aspect-16/9 rounded-sm grow-0 relative overflow-hidden'>
+                <div className='mt-2 bg-slate-200 w-full lg:w-[1165px] h-30 md:h-70 lg:h-[450px] aspect-16/9 rounded-sm grow-0 relative overflow-hidden'>
                     <Image
                         src={imagePreview}
                         alt='uploaded cover image preview'

@@ -1,32 +1,50 @@
-import BlogCard from "@/components/ui/BlogCard";
-import { db } from "@/db/db";
-import {blogs} from '@/db/schema'
+import { FeatureCard, FeatureHorizontalCard } from "@/components/ui/FeatureCards";
+import { getFeaturedBlogs } from "@/db/actions/blogActions";
 import { Fragment } from "react";
 
 export default async function Home() {
-  const blogList = await db.select().from(blogs).orderBy(blogs.created_at);
-  console.log(blogList)
+  const featuredBlogs = await getFeaturedBlogs()
+  
+  const topFeaturedBlog = featuredBlogs.data[0]
+  
   return (
     <Fragment>
-      <div className="flex flex-col mt-4">
-        <h2 className="text-black font-bold text-xl">Latest Blogs</h2>
-        <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, saepe. Sapiente sed reiciendis saepe doloribus modi voluptatibus sunt numquam nobis dolorum. At corrupti veniam quam vel sequi! Fugit impedit recusandae iusto, ab velit illo tempore corporis voluptate ullam delectus exercitationem non minima consequuntur tenetur mollitia eaque eligendi debitis ea magnam beatae nihil praesentium molestiae. Officiis, rem praesentium. Cumque aut modi, ea voluptates sunt nisi architecto. Doloribus rerum tempore dolor voluptas!</p>
+      <div className="mt-4 mb-8 mx-2 flex flex-row justify-center">
+        <div className="min-w-[150px] max-w-[600px] flex flex-col justify-center items-center">
+          <h2 className="text-black font-bold text-4xl">Welcome to ThinkThread</h2>
+          <p className="text-sm text-center mt-2">Your space to explore insightful threads on programming, tech trends, and creative development ideas. Whether you&apos;re here to learn, share, or just stay inspired — we&apos;re glad you&apos;re here. Dive in and discover what the tech world is thinking.</p>
+        </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "> 
-        {
-          blogList.map((blog) => (
-            <BlogCard 
-              key={blog.id}
-              id={blog.id}
-              title={blog.title}
-              author={blog.author}
-              description={blog.description}
-              category={blog.category}
-              created_at={blog.created_at}
+      <section className="mx-2 grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-2">
+          <FeatureCard 
+              id={topFeaturedBlog.id}
+              title={topFeaturedBlog.title}
+              author={topFeaturedBlog.author}
+              description={topFeaturedBlog.description}
+              category={topFeaturedBlog.category}
+              img_link={topFeaturedBlog.img_link}
+              created_at={topFeaturedBlog.created_at}
+              className="w-full"
             />
-          ))
-        }
-      </div>
+        <div className="flex mt-10 md:mt-0 flex-col gap-2">
+          <h3 className="font-bold text-2xl p-2">Featured Blogs</h3>
+          {featuredBlogs.data.slice(1, 4).map((blog) => (
+              <FeatureHorizontalCard
+                key={blog.id}
+                id={blog.id}
+                title={blog.title}
+                author={blog.author}
+                description={blog.description}
+                category={blog.category}
+                created_at={blog.created_at}
+                className="w-full"
+              />
+          ))}
+
+        </div>
+      </section>
     </Fragment>
   );
 }
+
+

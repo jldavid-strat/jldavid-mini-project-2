@@ -9,11 +9,6 @@ import {createBlog} from '@/db/actions/blogActions'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
-interface Option {
-  value: string;
-  label: string;
-}
-
 export default function AddBlogPage(){
 
   const [markdownContent, setMarkdownContent] = useState("") 
@@ -57,14 +52,12 @@ export default function AddBlogPage(){
     }
   }
 
-
-
   return (
     <div>
         <div className='mt-4 border rounded-sm p-4'>
           <h2 className='text-2xl font-bold mb-2'>Create New Blog</h2>
           
-          <form ref= {formRef} onSubmit={handleSubmit} className='flex flex-col gap-y-3'>
+          <form ref={formRef} onSubmit={handleSubmit} className='flex flex-col gap-y-3'>
             {/* title */}
             <div className='grid grid-cols-1 md:grid-cols-2 md:gap-8 gap-y-3'>
               <div>

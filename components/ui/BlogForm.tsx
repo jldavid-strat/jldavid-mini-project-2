@@ -9,22 +9,7 @@ import {createBlog, updateBlog} from '@/db/actions/blogActions'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
-interface Option {
-  value: string;
-  label: string;
-}
-
-interface BlogProps {
-  id: number;
-  title: string;
-  author: string;
-  category: string;
-  description: string;
-  img_link: string;
-  content: string;
-}
-
-export default function BlogForm({BlogData}:{BlogData?: BlogProps}){
+export default function BlogForm({BlogData}:{BlogData?: Blog}){
 
     // get the file name from the filepath (i.e 'assets/images/${filename}')
     console.log(BlogData)

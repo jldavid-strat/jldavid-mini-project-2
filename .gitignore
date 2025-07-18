@@ -43,5 +43,10 @@ next-env.d.ts
 # vscode
 /.vscode/
 
+# ignore page for testing random stuff
+/test-page/
+
 # drizzle
 /drizzle
+# clerk configuration (can include secrets)
+/.clerk/

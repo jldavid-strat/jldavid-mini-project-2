@@ -4,14 +4,7 @@ import React from 'react'
 import { Badge } from './Badge';
 import {formatDate} from '@/helpers/helper';
 
-interface BlogCardProps {
-    id: number;
-    author: string;
-    title: string;
-    description: string;
-    category: string;
-    created_at: Date;
-    img_link: string;
+interface BlogCardProps extends Blog {
     className?: string;
 }
 

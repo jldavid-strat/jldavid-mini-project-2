@@ -1,7 +1,5 @@
-
-export default function generateIndividualBlogMetadata(blog) {
-  const {
-    id,
+  
+export default function generateIndividualBlogMetadata({
     title,
     description,
     author,
@@ -9,7 +7,7 @@ export default function generateIndividualBlogMetadata(blog) {
     created_at,
     updated_at,
     img_link,
-  } = blog;
+}: Omit<Blog, "id" | "likes">) {
 
   // Create URL-friendly slug if not provided
   const blogSlug = title.toLowerCase()

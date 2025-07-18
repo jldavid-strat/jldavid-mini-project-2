@@ -1,0 +1,4 @@
+declare interface Option {
+  value: string;
+  label: string;
+}

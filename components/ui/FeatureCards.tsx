@@ -3,16 +3,10 @@ import { formatDate } from "@/helpers/helper";
 import Image from "next/image";
 import Link from "next/link";
 
-interface BlogCardProps {
-    id: number;
-    author: string;
-    title: string;
-    description: string;
-    category: string;
-    created_at: Date;
-    img_link: string;
+interface BlogCardProps extends Blog {
     className?: string;
 }
+
 
 export function FeatureCard({
     id,

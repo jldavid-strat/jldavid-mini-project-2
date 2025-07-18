@@ -15,7 +15,7 @@ type BlogDetailPageProps = {
     }
 }
 
-async function getBlogData(blogId: number) {
+async function getBlogData(blogId: number):Promise<Blog> {
   const blogResult = await db.select().from(blogs).where(eq(blogs.id, blogId));
   return blogResult[0] || null;
 }
